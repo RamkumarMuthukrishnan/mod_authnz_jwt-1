@@ -42,6 +42,7 @@
 
 #define JWT_LOGIN_HANDLER "jwt-login-handler"
 #define JWT_LOGOUT_HANDLER "jwt-login-handler"
+#define JWT_AUTHN_WITH_TOKEN "jwt-authn-with-token"
 #define USER_INDEX 0
 #define PASSWORD_INDEX 1
 #define FORM_SIZE 512
