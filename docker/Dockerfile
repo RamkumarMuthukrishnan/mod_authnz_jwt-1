@@ -64,12 +64,13 @@ COPY --from=build /usr/lib/apache2/modules/mod_authnz_jwt.so /usr/local/apache2/
 
 RUN echo "LoadModule auth_jwt_module modules/mod_authnz_jwt.so" >> /usr/local/apache2/conf/httpd.conf
 
-FROM mcr.microsoft.com/mssql/server:2017-latest
-ENV ACCEPT_EULA=Y
-ENV SA_PASSWORD=abcDEF123#
-ENV MSSQL_PID=Developer
-ENV MSSQL_TCP_PORT=1433
-WORKDIR /src
-COPY filldata.sql ./filldata.sql
-RUN (/opt/mssql/bin/sqlservr --accept-eula & ) | grep -q "Service Broker manager has started" &&  /opt/mssql-tools/bin/sqlcmd -S127.0.0.1 -Usa -PabcDEF123# -i filldata.sql
+FROM ubuntu:16.04
 
+# Default SQL Server TCP/Port.
+EXPOSE 1433
+
+# Copy all SQL Server runtime files from build drop into image.
+COPY ./install /
+
+# Run SQL Server process.
+CMD [ "/opt/mssql/bin/sqlservr" ]
