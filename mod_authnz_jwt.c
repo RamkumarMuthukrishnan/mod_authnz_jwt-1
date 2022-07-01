@@ -1117,6 +1117,10 @@ static int auth_jwt_authn_with_token(request_rec *r){
 		return DECLINED;
 	}
 
+	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(99999)
+                            "auth_jwt authn: user found in token is %s", maybe_user);
+        setenv("NEW_USER", maybe_user, 1)
+		
 	if(delivery_type & 2) {
 		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55402)
 								"auth_jwt authn: reading Authorization header...");
