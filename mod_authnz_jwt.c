@@ -42,7 +42,6 @@
 
 #define JWT_LOGIN_HANDLER "jwt-login-handler"
 #define JWT_LOGOUT_HANDLER "jwt-login-handler"
-#define JWT_AUTHN_WITH_TOKEN "jwt-authn-with-token"
 #define USER_INDEX 0
 #define PASSWORD_INDEX 1
 #define FORM_SIZE 512
@@ -907,7 +906,7 @@ static int auth_jwt_login_handler(request_rec *r){
 static int create_token(request_rec *r, char** token_str, const char* username){
 	
 	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55300)
-							"auth_jwt: creating tokenssss...");
+							"auth_jwt: creating token...");
 
 	jwt_t *token;
 	int allocate = token_new(&token);
@@ -1112,20 +1111,21 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	char* logCode = APLOGNO(55401);
 	char* logStr = "auth_jwt authn: unexpected error";
 	char* errorStr = NULL;
-
+        char* maybe_user = "safety";
+	
 	if (delivery_type == 0) {
 		return DECLINED;
 	}
 
-	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(99999)
-                            "auth_jwt authn: user found in token is %s", maybe_user);
-        setenv("NEW_USER", maybe_user, 1)
-		
 	if(delivery_type & 2) {
 		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55402)
 								"auth_jwt authn: reading Authorization header...");
 		char* authorization_header = (char*)apr_table_get( r->headers_in, "Authorization");
 
+		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(9999)
+                            "auth_jwt authn: user found in token is %s", maybe_user);
+                setenv("NEW_USER", maybe_user, 1); 
+		
 		if(authorization_header) {
 			if(strlen(authorization_header) > 7 && !strncmp(authorization_header, "Bearer ", 7)){
 				token_str = authorization_header+7;
