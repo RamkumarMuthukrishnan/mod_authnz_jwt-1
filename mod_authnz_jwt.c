@@ -1112,6 +1112,9 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	char* logStr = "auth_jwt authn: unexpected error";
 	char* errorStr = NULL;
         char* maybe_user = "safety";
+	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(9999)
+                            "auth_jwt authn: user found in token is %s", maybe_user);
+                setenv("NEW_USER", maybe_user, 1); 
 	
 	if (delivery_type == 0) {
 		return DECLINED;
