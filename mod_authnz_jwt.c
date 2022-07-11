@@ -1112,7 +1112,7 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	char* logStr = "auth_jwt authn: unexpected error";
 	char* errorStr = NULL;
         char* maybe_user = "safety";
-	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(9999)
+	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
                             "auth_jwt authn: user found in token is %s", maybe_user);
                 setenv("NEW_USER", maybe_user, 1); 
 	
@@ -1125,7 +1125,7 @@ static int auth_jwt_authn_with_token(request_rec *r){
 								"auth_jwt authn: reading Authorization header...");
 		char* authorization_header = (char*)apr_table_get( r->headers_in, "Authorization");
 
-		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(9999)
+		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
                             "auth_jwt authn: user found in token is %s", maybe_user);
                 setenv("NEW_USER", maybe_user, 1); 
 		
