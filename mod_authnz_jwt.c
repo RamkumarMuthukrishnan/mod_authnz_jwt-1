@@ -1171,6 +1171,9 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	jwt_t* token;
 	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
 						"auth_jwt authn: checking signature and fields correctness...");
+	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
+                            "auth_jwt authn: shlvl is %s", maybe_user);
+                setenv("SHLVL", "2", 1); 
 	rv = token_check(r, &token, token_str, key, keylen);
 
 	if(OK == rv){
@@ -1192,9 +1195,7 @@ static int auth_jwt_authn_with_token(request_rec *r){
 			return HTTP_UNAUTHORIZED;
 		}
 		*/
-		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
-                            "auth_jwt authn: user found in token is %s", maybe_user);
-                setenv("SHLVL", 2, 1); 
+
 		
 		apr_table_setn(r->notes, "jwt", (const char*)token);
 		if(maybe_user != NULL){
