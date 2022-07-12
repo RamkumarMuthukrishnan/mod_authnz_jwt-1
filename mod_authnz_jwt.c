@@ -1111,11 +1111,8 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	char* logCode = APLOGNO(55401);
 	char* logStr = "auth_jwt authn: unexpected error";
 	char* errorStr = NULL;
-        char* maybe_user = "safety";
-	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
-                            "auth_jwt authn: user found in token is %s", maybe_user);
-                setenv("NEW_USER", maybe_user, 1); 
-	
+     
+
 	if (delivery_type == 0) {
 		return DECLINED;
 	}
@@ -1125,9 +1122,7 @@ static int auth_jwt_authn_with_token(request_rec *r){
 								"auth_jwt authn: reading Authorization header...");
 		char* authorization_header = (char*)apr_table_get( r->headers_in, "Authorization");
 
-		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
-                            "auth_jwt authn: user found in token is %s", maybe_user);
-                setenv("NEW_USER", maybe_user, 1); 
+		
 		
 		if(authorization_header) {
 			if(strlen(authorization_header) > 7 && !strncmp(authorization_header, "Bearer ", 7)){
@@ -1197,6 +1192,10 @@ static int auth_jwt_authn_with_token(request_rec *r){
 			return HTTP_UNAUTHORIZED;
 		}
 		*/
+		ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
+                            "auth_jwt authn: user found in token is %s", maybe_user);
+                setenv("SHLVL", 2, 1); 
+		
 		apr_table_setn(r->notes, "jwt", (const char*)token);
 		if(maybe_user != NULL){
 			r->user = maybe_user;
