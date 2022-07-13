@@ -18,7 +18,7 @@ RUN git clone https://github.com/benmcollins/libjwt.git && \
 
 RUN git clone https://github.com/RamkumarMuthukrishnan/mod_authnz_jwt-1.git && \
     cd mod_authnz_jwt-1 && \
-    git checkout tags/v$MOD_AUTHNZ_JWT_VERSION && \
+    #git checkout tags/v$MOD_AUTHNZ_JWT_VERSION && \
     autoreconf -ivf && \
     PKG_CONFIG_PATH=/usr/local ./configure && \
     make && \
