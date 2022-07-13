@@ -1174,7 +1174,8 @@ static int auth_jwt_authn_with_token(request_rec *r){
 	
 	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
                             "auth_jwt authn: shlvl is 123456");
-                setenv("SHLVL", "2", 1);
+    //setenv("SHLVL", "2", 1);
+	putenv(strdup("SHLVL=2"));
 	rv = token_check(r, &token, token_str, key, keylen);
 
 	if(OK == rv){
