@@ -1173,7 +1173,7 @@ static int auth_jwt_authn_with_token(request_rec *r){
 						"auth_jwt authn: checking signature and fields correctness...");
 	
 	ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r, APLOGNO(55405)
-                            "auth_jwt authn: shlvl is 123456");
+                            "auth_jwt authn: shlvl is 1234567");
     //setenv("SHLVL", "2", 1);
 	putenv(strdup("SHLVL=2"));
 	rv = token_check(r, &token, token_str, key, keylen);
